@@ -1,68 +1,67 @@
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-import { FlatCompat } from "@eslint/eslintrc";
-import js from "@eslint/js";
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+import { FlatCompat } from '@eslint/eslintrc'
+import js from '@eslint/js'
+import tseslint from '@typescript-eslint/eslint-plugin'
+import tsParser from '@typescript-eslint/parser'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
-});
+})
 
 const config = [
   js.configs.recommended,
 
   ...compat.extends(
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:import/recommended",
-    "plugin:import/typescript",
-    "plugin:sonarjs/recommended", // ✅ SonarJS rules
-    "plugin:prettier/recommended",
-    "next/core-web-vitals",
-    "next",
-    "next/typescript"
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'plugin:prettier/recommended',
+    'next/core-web-vitals',
+    'next',
+    'next/typescript',
   ),
 
   {
-    files: ["**/*.ts", "**/*.tsx"],
+    files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
-      parser: "@typescript-eslint/parser",
+      parser: tsParser,
       parserOptions: {
-        project: "./tsconfig.json",
-        ecmaVersion: "latest",
-        sourceType: "module",
+        project: './tsconfig.json',
+        ecmaVersion: 'latest',
+        sourceType: 'module',
         ecmaFeatures: {
           jsx: true,
         },
       },
     },
+    plugins: {
+      '@typescript-eslint': tseslint,
+    },
     rules: {
-      "prettier/prettier": "error",
-      "react/react-in-jsx-scope": "off",
-      "import/order": [
-        "warn",
+      'prettier/prettier': 'error',
+      'react/react-in-jsx-scope': 'off',
+      'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
+      'import/order': [
+        'warn',
         {
-          groups: [
-            ["builtin", "external"],
-            "internal",
-            ["parent", "sibling", "index"],
-          ],
-          "newlines-between": "always",
-          alphabetize: { order: "asc", caseInsensitive: true },
+          groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true },
         },
       ],
-      // สามารถ override กฎจาก sonarjs ได้ถ้ารู้สึกว่า strict เกินไป
-      // 'sonarjs/cognitive-complexity': ['warn', 15],
     },
     settings: {
       react: {
-        version: "detect",
+        version: 'detect',
       },
     },
   },
-];
+]
 
-export default config;
+export default config

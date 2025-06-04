@@ -1,13 +1,14 @@
-import axios from "axios";
-import { setupAxiosInterceptors } from "./interceptor";
+import axios from 'axios'
+
+import { setupAxiosInterceptors } from './interceptor'
 
 const axiosInstance = setupAxiosInterceptors(
   axios.create({
-    baseURL: `${process.env.NEXT_PUBLIC_API_ENDPOINT}` || "",
+    baseURL: `${process.env.NEXT_PUBLIC_API_ENDPOINT}` || '',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-  })
-);
+  }),
+)
 
-export default axiosInstance;
+export default axiosInstance
