@@ -1,0 +1,19 @@
+{
+  "auth": {
+    "login": {
+      "loginButton": "เข้าสู่ระบบ",
+      "emailLabel": "อีเมล",
+      "passwordLabel": "รหัสผ่าน"
+    }
+  },
+  "index": {
+    "title": "หน้าแรก",
+    "description": "ยินดีต้อนรับสู่หน้าแรก",
+    "emailLabel": "อีเมล",
+    "nameLabel": "ชื่อ"
+  },
+  "validation": {
+    "email": "รูปแบบอีเมลไม่ถูกต้อง",
+    "password": "รหัสผ่านต้องมีอย่างน้อย 1 ตัวอักษร"
+  }
+}

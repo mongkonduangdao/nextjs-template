@@ -1,4 +1,8 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios'
+import Cookies from 'js-cookie'
+
+import PAGE_URL from '@/shared/constants/page-url'
+import REQUEST_URL from '@/shared/services/requestUrl'
 
 declare module 'axios' {
   export interface AxiosRequestConfig {
@@ -37,24 +41,24 @@ const handleQueuedRequest = async (originalRequest: AxiosRequestConfig, axiosIns
 }
 
 const refreshAccessToken = async () => {
-  const refreshToken = localStorage.getItem('refreshToken')
+  const refreshToken = Cookies.get('refreshToken')
   if (!refreshToken) {
     throw new Error('No refresh token available')
   }
 
-  const response = await axios.post('/api/auth/refresh', { refreshToken })
+  const response = await axios.post(REQUEST_URL.v1.auth.refresh, { refreshToken })
   return response.data
 }
 
 const updateTokens = (tokens: { accessToken: string; newRefreshToken: string }) => {
-  localStorage.setItem('accessToken', tokens.accessToken)
-  localStorage.setItem('refreshToken', tokens.newRefreshToken)
+  Cookies.set('accessToken', tokens.accessToken, { secure: true, sameSite: 'strict' })
+  Cookies.set('refreshToken', tokens.newRefreshToken, { secure: true, sameSite: 'strict' })
 }
 
 const handleRefreshError = () => {
-  localStorage.removeItem('accessToken')
-  localStorage.removeItem('refreshToken')
-  window.location.href = '/login'
+  Cookies.remove('accessToken')
+  Cookies.remove('refreshToken')
+  window.location.href = PAGE_URL.auth.login
 }
 
 const handleError = (error: unknown): Promise<never> => {
@@ -70,7 +74,7 @@ export const setupAxiosInterceptors = (axiosInstance: AxiosInstance) => {
   axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     if (config.requiredAuth === false) return config
 
-    const token = localStorage.getItem('accessToken')
+    const token = Cookies.get('accessToken')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }

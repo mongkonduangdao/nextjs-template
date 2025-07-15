@@ -1,0 +1,19 @@
+{
+  "auth": {
+    "login": {
+      "loginButton": "Login",
+      "emailLabel": "Email",
+      "passwordLabel": "Password"
+    }
+  },
+  "index": {
+    "title": "Home",
+    "description": "Welcome to the home page",
+    "emailLabel": "Email",
+    "nameLabel": "Name"
+  },
+  "validation": {
+    "email": "Invalid email address",
+    "password": "Password is required"
+  }
+}

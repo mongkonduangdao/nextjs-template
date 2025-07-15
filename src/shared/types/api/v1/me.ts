@@ -1,9 +1,17 @@
-export interface MeResponse {
+export interface IMeParams {
+  isIgnoreError?: boolean
+}
+
+export interface IMeResponse {
   user: {
+    accessToken: string
+    createdAt: string
     email: string
-    firstName: string
-    lastName: string
-    role: string
+    id: string
+    name: string
+    password: string
+    refreshToken: string
+    updatedAt: string
   }
   permissions: string[]
 }

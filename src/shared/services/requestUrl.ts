@@ -5,9 +5,7 @@ const REQUEST_URL = {
       register: '/v1/auth/register',
       logout: '/v1/auth/logout',
       refresh: '/v1/auth/refresh',
-    },
-    me: {
-      get: '/v1/me',
+      me: '/v1/auth/me',
     },
   },
 } as const
